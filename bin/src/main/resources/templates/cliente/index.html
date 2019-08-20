@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:include="layout :: htmlhead"></head>
+	<body>
+	<div class="container">
+	<nav th:replace="layout :: menu">(menu)</nav>
+	<a href="form.html" th:href="@{/cliente/novo}"class="btn btn-primary btn-lg" role="button">Novo</a>
+		<table class="table" id="clientes">
+			<thead class="thead-light"> 
+				<tr>
+					<th scope="col">Nome</th>
+					<th scope="col">Endereço</th>
+					<th scope="col">Data</th>
+					<th scope="col">Botão / Botón</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr scope="row" th:each="umcliente : ${clientes}">
+					<td th:text="${umcliente.nome}"></td>
+					<td th:text="${umcliente.endereco}"></td>
+					<td th:text="${#dates.format(umcliente.data, 'dd/MM/yyyy HH:mm')}"></td>
+					<td><a th:href="@{'/cliente/alterar/' + ${umcliente.id}}"class="btn btn-primary btn-lg">Alterar</a>
+						<a href="#" class='btn btn-danger btn-lg js-delete' th:data-customer-id="${umcliente.id}">Excluir</a></td>
+					
+				</tr>
+			</tbody>
+		</table>
+		</div>
+		<div th:include="layout :: footer" id="footer">(footer)</div>
+		
+		<script type="text/javascript">
+			$(document).ready(function(){
+				$("#clientes").on("click",".js-delete",function(){
+					var button = $(this);
+					bootbox.confirm("Confirma a exclusão do cliente?",function(result){
+						if(result){
+							$.ajax({
+								url:"/cliente/excluir/"+
+								button.attr("data-customer-id"),
+								method: "GET",
+								success: function (){
+									window.location.href = "/cliente"
+								}
+							});
+						}
+					});
+				});
+			});
+		</script>
+	</body>
+</html>

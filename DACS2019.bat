@@ -1,0 +1,1 @@
+setx DACS2019_DB_HOST jdbc:mysql://localhost:3306/dacsjava2019?useTimezone=true&serverTimezone=UTC

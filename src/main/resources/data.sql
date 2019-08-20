@@ -1,0 +1,1 @@
+INSERT INTO cliente(nome,endereco,data) VALUES ('Pedro','rua lalal','2019-05-21');
